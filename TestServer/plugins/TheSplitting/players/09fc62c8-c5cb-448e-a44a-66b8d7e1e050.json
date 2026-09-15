@@ -1,0 +1,46 @@
+{
+  "name": "J202",
+  "playerRole": {
+    "playerRole": "Novice"
+  },
+  "playerSettings": {
+    "isStarter": 0
+  },
+  "playerStats": {
+    "maxHealth": 4,
+    "level": 1,
+    "inferno": 1,
+    "bolt": 1,
+    "water_flow": 1,
+    "green_flame": 1
+  },
+  "playerInventory": {
+    "inventorySlots": [
+      "start_sword",
+      null,
+      null,
+      null,
+      "inventory_manager",
+      null,
+      null,
+      null,
+      "start_book"
+    ]
+  },
+  "collectableItems": {
+    "items": {
+      "start_sword": {
+        "category": "MELEE",
+        "possession": 1
+      },
+      "start_book": {
+        "category": "MISCELLANEOUS",
+        "possession": 1
+      },
+      "fire_sword": {
+        "category": "MELEE",
+        "possession": 0
+      }
+    }
+  }
+}
