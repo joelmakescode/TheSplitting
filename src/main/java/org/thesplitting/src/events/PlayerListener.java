@@ -51,6 +51,7 @@ public record PlayerListener(ServiceRegistry registry, PlayerService playerServi
     public void onLeave(PlayerQuitEvent e) {
         inventoryService.clearPlayerCache(e.getPlayer().getUniqueId());
         playerService.savePlayerFile(e.getPlayer());
+        playerService.removeCachedPlayerData(e.getPlayer());
     }
 
     @EventHandler

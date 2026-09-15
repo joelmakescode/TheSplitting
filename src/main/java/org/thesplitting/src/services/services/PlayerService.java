@@ -2,16 +2,26 @@ package org.thesplitting.src.services.services;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.thesplitting.src.misc.errorhandler.PlayerErrorHandler;
 import org.thesplitting.src.services.contracts.IService;
 import org.thesplitting.src.data.player.PlayerData;
 import org.thesplitting.src.services.services.fileservice.PlayerFileService;
-import org.thesplitting.src.misc.exceptions.PlayerDataNotFoundException;
 import org.thesplitting.src.services.services.itemservice.ItemService;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
-public record PlayerService(PlayerFileService playerFileManager, ItemService itemManager) implements IService {
+public class PlayerService implements IService {
+    private final PlayerFileService playerFileService;
+    private final ItemService itemService;
+
+    private final HashMap<UUID, PlayerData> cachePlayerData = new HashMap<>();
+
+    public PlayerService(PlayerFileService playerFileService, ItemService itemService) {
+        this.playerFileService = playerFileService;
+        this.itemService = itemService;
+    }
+
     @Override
     public void onEnable() {
 
@@ -23,21 +33,29 @@ public record PlayerService(PlayerFileService playerFileManager, ItemService ite
     }
 
     public void initiatePlayerSetup(Player player) {
-        PlayerData playerData = loadPlayerFile(player);
+        PlayerData playerData = checkForCachePlayerData(player.getUniqueId());
+        if (playerData == null) {
+            playerData = loadPlayerFile(player);
+        }
+
         loadPlayer(playerData, player);
 
         if (playerData.playerSettings().getIsStarter() == 1) {
             playerData.playerSettings().setIsStarter(0);
         }
 
-        playerFileManager.writePlayerFile(player, playerData);
+        playerFileService.writePlayerFile(player, playerData);
+        cachePlayerData.put(player.getUniqueId(), playerData);
     }
 
     public PlayerData loadPlayerFile(Player player) {
-        PlayerData playerData = playerFileManager.readPlayerFile(player);
+        PlayerData playerData = cachePlayerData.get(player.getUniqueId());
         if (playerData == null) {
-            playerFileManager.createPlayerFile(player);
-
+            playerData = playerFileService.readPlayerFile(player);
+            if (playerData == null) {
+                playerFileService.createPlayerFile(player);
+            }
+            cachePlayerData.put(player.getUniqueId(), playerData);
             return loadPlayerFile(player);
         }
 
@@ -46,11 +64,19 @@ public record PlayerService(PlayerFileService playerFileManager, ItemService ite
 
     public void savePlayerFile(Player player) {
         PlayerData playerData = loadPlayerFile(player);
-        playerFileManager.writePlayerFile(player, playerData);
+        playerFileService.writePlayerFile(player, playerData);
     }
 
     public void updatePlayerFile(Player player, PlayerData playerData) {
-        playerFileManager.writePlayerFile(player, playerData);
+        playerFileService.writePlayerFile(player, playerData);
+        cachePlayerData.put(player.getUniqueId(), playerData);
+    }
+
+    public void removeCachedPlayerData(Player player) {
+        PlayerData playerData = checkForCachePlayerData(player.getUniqueId());
+        if (playerData != null) {
+            cachePlayerData.remove(player.getUniqueId());
+        }
     }
 
     private void loadPlayer(PlayerData playerData, Player player) {
@@ -68,7 +94,15 @@ public record PlayerService(PlayerFileService playerFileManager, ItemService ite
             if (key == null || key.isEmpty()) {
                 continue;
             }
-            Objects.requireNonNull(player.getPlayer()).getInventory().setItem(i, itemManager.getItemStack(key));
+            Objects.requireNonNull(player.getPlayer()).getInventory().setItem(i, itemService.getItemStack(key));
         }
+    }
+
+    private PlayerData checkForCachePlayerData(UUID uuid) {
+        if (cachePlayerData.containsKey(uuid)) {
+            return cachePlayerData.get(uuid);
+        }
+
+        return null;
     }
 }
