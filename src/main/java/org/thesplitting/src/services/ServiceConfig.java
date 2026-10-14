@@ -17,6 +17,8 @@ import java.util.function.Function;
 public class ServiceConfig {
     public static List<Function<ServiceRegistry, IService>> getServices() {
         return List.of(
+                registry -> new ApiService(registry.getPlugin()),
+
                 ItemService::new,
                 registry -> new PlayerErrorHandler(registry.getPlugin()),
                 registry -> new WorldService(registry.getPlugin()),
@@ -29,7 +31,7 @@ public class ServiceConfig {
 
                 registry -> new InventoryService(registry.getService(ItemService.class), registry.getService(PlayerService.class)),
                 registry -> new ScoreboardService(registry.getService(PlayerService.class)),
-                registry -> new PlayerListener(registry, registry.getService(PlayerService.class), registry.getService(ChatControlService.class), registry.getService(InventoryService.class), registry.getService(ScoreboardService.class), registry.getService(PlayerErrorHandler.class)),
+                registry -> new PlayerListener(registry, registry.getService(PlayerService.class), registry.getService(ChatControlService.class), registry.getService(InventoryService.class), registry.getService(ScoreboardService.class), registry.getService(PlayerErrorHandler.class), registry.getService(ApiService.class)),
 
                 registry -> new ItemListenerService(registry.getService(InventoryService.class)),
                 registry -> new ItemListener(registry, registry.getService(ItemListenerService.class))

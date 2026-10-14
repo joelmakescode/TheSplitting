@@ -13,16 +13,17 @@ import org.thesplitting.src.data.server.chatcontrol.ChatFilterResult;
 import org.thesplitting.src.data.server.chatcontrol.MessageData;
 import org.thesplitting.src.misc.errorhandler.PlayerErrorHandler;
 import org.thesplitting.src.misc.exceptions.PlayerDataNotFoundException;
-import org.thesplitting.src.services.services.ChatControlService;
-import org.thesplitting.src.services.services.InventoryService;
-import org.thesplitting.src.services.services.MessageService;
-import org.thesplitting.src.services.services.PlayerService;
-import org.thesplitting.src.services.services.ScoreboardService;
+import org.thesplitting.src.services.services.*;
 import org.thesplitting.src.services.contracts.IService;
 import org.thesplitting.src.services.ServiceRegistry;
 import org.thesplitting.src.services.services.fileservice.ChatControlFileService;
 
-public record PlayerListener(ServiceRegistry registry, PlayerService playerService, ChatControlService chatControlService, InventoryService inventoryService, ScoreboardService scoreboardService, PlayerErrorHandler playerErrorHandler) implements Listener, IService {
+import java.util.logging.Level;
+
+record PlayerJoinRequest(String uuid, String name){}
+record PlayerJoinResponse(String uuid, String name, String createdAt, String updatedAt){}
+
+public record PlayerListener(ServiceRegistry registry, PlayerService playerService, ChatControlService chatControlService, InventoryService inventoryService, ScoreboardService scoreboardService, PlayerErrorHandler playerErrorHandler, ApiService apiService) implements Listener, IService {
 
     @Override
     public void onEnable() {
@@ -41,6 +42,18 @@ public record PlayerListener(ServiceRegistry registry, PlayerService playerServi
             playerService.initiatePlayerSetup(player);
             chatControlService.loadChatControlFile(player);
             scoreboardService.updatePlayerTeam(player);
+            apiService
+                    .post("/minecraft/users/join", new PlayerJoinRequest(player.getUniqueId().toString(), player.getName()), PlayerJoinResponse.class)
+                    .thenAccept(response -> {
+                        apiService.runSync(() -> {
+                            MessageService.infoMessage(player, "Successfully joined the server!");
+                        });
+                    })
+                    .exceptionally(exception -> {
+                        registry.getPlugin().getLogger().log(Level.SEVERE, "Failed to join the server!", exception);
+                        exception.printStackTrace();
+                        return null;
+                    });
         } catch (Exception ex) {
             playerErrorHandler.playerDataNotFoundError(player);
             throw new PlayerDataNotFoundException(player.getName());
