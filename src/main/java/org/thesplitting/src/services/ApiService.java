@@ -1,9 +1,9 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 
 import java.net.URI;
 import java.net.http.HttpClient;

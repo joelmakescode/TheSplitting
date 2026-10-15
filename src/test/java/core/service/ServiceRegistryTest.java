@@ -3,8 +3,8 @@ package core.service;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.core.ServiceRegistry;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

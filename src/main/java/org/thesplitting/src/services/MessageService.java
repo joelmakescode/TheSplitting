@@ -1,9 +1,7 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
 
 public final class MessageService {
     private static final String TITLE = ChatColor.GOLD + "[The Splitting] ";

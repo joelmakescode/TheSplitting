@@ -1,6 +1,6 @@
 package org.thesplitting;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.thesplitting.src.services.ServiceRegistry;
+import org.thesplitting.src.core.ServiceRegistry;
 
 public class Plugin extends JavaPlugin {
     private ServiceRegistry serviceRegistry;

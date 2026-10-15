@@ -1,8 +1,9 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.thesplitting.src.data.player.PlayerData;
 import org.thesplitting.src.data.player.PlayerRoles.PlayerRoles;
 import org.thesplitting.src.data.server.chatcontrol.ChatControlLevel;
@@ -10,9 +11,8 @@ import org.thesplitting.src.data.server.chatcontrol.ChatFilterResult;
 import org.thesplitting.src.data.server.chatcontrol.MessageData;
 import org.thesplitting.src.data.server.chatcontrol.PlayerChatControlData;
 import org.thesplitting.src.misc.helper.ToolBox;
-import org.thesplitting.src.services.ServiceRegistry;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.services.fileservice.ChatControlFileService;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.services.fileservice.ChatControlFileService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,22 +25,22 @@ public class ChatControlService implements IService {
     private static final String OFFENSIVE_RESOURCE = "chat-control/offensive-words.txt";
     private static final String UNACCEPTABLE_RESOURCE = "chat-control/unacceptable-words.txt";
 
-    private final ServiceRegistry registry;
+    private final JavaPlugin plugin;
     private final ChatControlFileService chatControlFileService;
     private final PlayerService playerService;
     private Set<String> offensiveWords = Set.of();
     private Set<String> unacceptableWords = Set.of();
 
-    public ChatControlService(ServiceRegistry registry, ChatControlFileService chatControlFileService, PlayerService playerService) {
-        this.registry = registry;
+    public ChatControlService(JavaPlugin plugin, ChatControlFileService chatControlFileService, PlayerService playerService) {
+        this.plugin = plugin;
         this.chatControlFileService = chatControlFileService;
         this.playerService = playerService;
     }
 
     @Override
     public void onEnable() {
-        registry.getPlugin().saveResource(OFFENSIVE_RESOURCE, false);
-        registry.getPlugin().saveResource(UNACCEPTABLE_RESOURCE, false);
+        plugin.saveResource(OFFENSIVE_RESOURCE, false);
+        plugin.saveResource(UNACCEPTABLE_RESOURCE, false);
 
         offensiveWords = loadWordList("offensive-words.txt");
         unacceptableWords = loadWordList("unacceptable-words.txt");
@@ -116,7 +116,7 @@ public class ChatControlService implements IService {
     }
 
     private Set<String> loadWordList(String fileName) {
-        Path path = registry.getPlugin().getDataFolder().toPath().resolve(FOLDER).resolve(fileName);
+        Path path = plugin.getDataFolder().toPath().resolve(FOLDER).resolve(fileName);
         Set<String> words = new HashSet<String>();
 
         try {
@@ -130,7 +130,7 @@ public class ChatControlService implements IService {
                 words.add(trimmed);
             }
         } catch (IOException e) {
-            registry.getPlugin().getLogger().warning("Could not load word list from file " + fileName + ": " + e.getMessage());
+            plugin.getLogger().warning("Could not load word list from file " + fileName + ": " + e.getMessage());
         }
 
         return words;

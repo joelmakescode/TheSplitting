@@ -1,4 +1,4 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,8 +14,8 @@ import org.thesplitting.src.data.item.GenericItemGenerator;
 import org.thesplitting.src.data.item.CollectableItems.CollectableItemData;
 import org.thesplitting.src.data.item.CollectableItems.ItemCategories;
 import org.thesplitting.src.data.item.PlayerItems.InventoryManagerItem;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.services.itemservice.ItemService;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.services.itemservice.ItemService;
 
 import java.util.*;
 import java.util.regex.Matcher;

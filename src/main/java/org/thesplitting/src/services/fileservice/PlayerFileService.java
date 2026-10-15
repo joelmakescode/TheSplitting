@@ -1,8 +1,8 @@
-package org.thesplitting.src.services.services.fileservice;
+package org.thesplitting.src.services.fileservice;
 
 import org.bukkit.entity.Player;
 import org.thesplitting.src.data.player.PlayerData;
-import org.thesplitting.src.services.ServiceRegistry;
+import org.thesplitting.src.core.ServiceRegistry;
 
 import java.nio.file.Path;
 

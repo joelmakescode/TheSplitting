@@ -1,11 +1,11 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 import org.thesplitting.src.data.player.PlayerData;
-import org.thesplitting.src.services.services.fileservice.PlayerFileService;
-import org.thesplitting.src.services.services.itemservice.ItemService;
+import org.thesplitting.src.services.fileservice.PlayerFileService;
+import org.thesplitting.src.services.itemservice.ItemService;
 
 import java.util.HashMap;
 import java.util.Objects;

@@ -1,11 +1,11 @@
-package org.thesplitting.src.services.services.itemservice;
+package org.thesplitting.src.services.itemservice;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.thesplitting.src.data.item.PlayerItems.InventoryManagerItem;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.services.InventoryService;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.services.InventoryService;
 
 import java.util.Objects;
 

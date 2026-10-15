@@ -1,9 +1,9 @@
-package org.thesplitting.src.services.services.fileservice;
+package org.thesplitting.src.services.fileservice;
 
 import com.google.gson.*;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
-import org.thesplitting.src.services.contracts.IFileService;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.core.ServiceRegistry;
+import org.thesplitting.src.core.contracts.IFileService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
