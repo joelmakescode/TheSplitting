@@ -3,7 +3,7 @@ package org.thesplitting.src.misc.errorhandler;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 
 public class PlayerErrorHandler implements IService {
     private final JavaPlugin plugin;

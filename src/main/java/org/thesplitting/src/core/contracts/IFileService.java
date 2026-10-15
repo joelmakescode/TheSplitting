@@ -1,4 +1,4 @@
-package org.thesplitting.src.services.contracts;
+package org.thesplitting.src.core.contracts;
 
 import java.io.IOException;
 import java.nio.file.Path;

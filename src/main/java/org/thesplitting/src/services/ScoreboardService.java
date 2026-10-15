@@ -1,4 +1,4 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -7,7 +7,7 @@ import org.bukkit.scoreboard.Team;
 import org.thesplitting.src.data.player.PlayerData;
 import org.thesplitting.src.data.player.PlayerRoles.PlayerRoles;
 import org.thesplitting.src.misc.helper.ToolBox;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 
 public class ScoreboardService implements IService {
     private final PlayerService playerService;

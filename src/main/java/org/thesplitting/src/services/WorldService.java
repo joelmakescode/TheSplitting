@@ -1,11 +1,10 @@
-package org.thesplitting.src.services.services;
+package org.thesplitting.src.services;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.thesplitting.Plugin;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 
 import java.io.IOException;
 import java.nio.file.*;

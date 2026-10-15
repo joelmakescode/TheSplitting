@@ -1,33 +1,28 @@
 package org.thesplitting.src.events;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
-import org.thesplitting.src.data.server.chatcontrol.ChatControlLevel;
-import org.thesplitting.src.data.server.chatcontrol.ChatFilterResult;
-import org.thesplitting.src.data.server.chatcontrol.MessageData;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.thesplitting.src.misc.errorhandler.PlayerErrorHandler;
 import org.thesplitting.src.misc.exceptions.PlayerDataNotFoundException;
-import org.thesplitting.src.services.services.*;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
-import org.thesplitting.src.services.services.fileservice.ChatControlFileService;
+import org.thesplitting.src.services.*;
+import org.thesplitting.src.core.contracts.IService;
 
 import java.util.logging.Level;
 
 record PlayerJoinRequest(String uuid, String name){}
 record PlayerJoinResponse(String uuid, String name, String createdAt, String updatedAt){}
 
-public record PlayerListener(ServiceRegistry registry, PlayerService playerService, ChatControlService chatControlService, InventoryService inventoryService, ScoreboardService scoreboardService, PlayerErrorHandler playerErrorHandler, ApiService apiService) implements Listener, IService {
+public record PlayerListener(JavaPlugin plugin, PlayerService playerService, ChatControlService chatControlService, InventoryService inventoryService, ScoreboardService scoreboardService, PlayerErrorHandler playerErrorHandler, ApiService apiService) implements Listener, IService {
 
     @Override
     public void onEnable() {
-        registry.getPlugin().getServer().getPluginManager().registerEvents(this, registry.getPlugin());
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @Override
@@ -50,7 +45,7 @@ public record PlayerListener(ServiceRegistry registry, PlayerService playerServi
                         });
                     })
                     .exceptionally(exception -> {
-                        registry.getPlugin().getLogger().log(Level.SEVERE, "Failed to join the server!", exception);
+                        plugin.getLogger().log(Level.SEVERE, "Failed to join the server!", exception);
                         exception.printStackTrace();
                         return null;
                     });
@@ -78,7 +73,7 @@ public record PlayerListener(ServiceRegistry registry, PlayerService playerServi
     public void onRespawn(PlayerRespawnEvent e) {
         Player player = e.getPlayer();
 
-        Bukkit.getScheduler().runTask(registry.getPlugin(), () -> {
+        Bukkit.getScheduler().runTask(plugin, () -> {
             playerService.initiatePlayerSetup(player);
         });
     }

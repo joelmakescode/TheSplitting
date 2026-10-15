@@ -7,15 +7,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.thesplitting.src.data.item.PlayerItems.InventoryManagerItem;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
-import org.thesplitting.src.services.services.itemservice.ItemListenerService;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.services.itemservice.ItemListenerService;
 
-public record ItemListener(ServiceRegistry registry, ItemListenerService itemListenerManager) implements Listener, IService {
+public record ItemListener(JavaPlugin plugin, ItemListenerService itemListenerManager) implements Listener, IService {
     @Override
     public void onEnable() {
-        registry.getPlugin().getServer().getPluginManager().registerEvents(this, registry.getPlugin());
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @Override

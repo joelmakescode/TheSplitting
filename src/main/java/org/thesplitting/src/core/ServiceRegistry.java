@@ -1,8 +1,7 @@
-package org.thesplitting.src.services;
+package org.thesplitting.src.core;
 
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.thesplitting.src.services.contracts.IService;
+import org.thesplitting.src.core.contracts.IService;
 
 import java.util.ArrayList;
 import java.util.List;

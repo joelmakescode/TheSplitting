@@ -1,4 +1,4 @@
-package org.thesplitting.src.services.services.itemservice;
+package org.thesplitting.src.services.itemservice;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -12,8 +12,8 @@ import org.thesplitting.src.data.item.PlayerItems.InventoryManagerItem;
 import org.thesplitting.src.data.item.PlayerItems.StartBookItem;
 import org.thesplitting.src.data.item.PlayerItems.StartSwordItem;
 import org.thesplitting.src.misc.annotations.Nullable;
-import org.thesplitting.src.services.contracts.IService;
-import org.thesplitting.src.services.ServiceRegistry;
+import org.thesplitting.src.core.contracts.IService;
+import org.thesplitting.src.core.ServiceRegistry;
 
 import java.util.HashMap;
 import java.util.List;

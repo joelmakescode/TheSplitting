@@ -9,7 +9,7 @@ import org.thesplitting.src.data.player.PlayerRoles.PlayerRoles;
 
 import java.util.HashMap;
 
-import static org.thesplitting.src.services.services.itemservice.ItemService.getItems;
+import static org.thesplitting.src.services.itemservice.ItemService.getItems;
 
 public record PlayerData(String name, PlayerRole playerRole, PlayerSettings playerSettings, PlayerStats playerStats, PlayerInventory playerInventory, CollectableItems collectableItems) {
 
