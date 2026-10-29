@@ -5,6 +5,7 @@ import org.thesplitting.src.core.contracts.IService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class ServiceRegistry {
     private final JavaPlugin plugin;
@@ -18,7 +19,11 @@ public class ServiceRegistry {
      * Registriert alle Services aus Service Config.
      */
     public void registerAll() {
-        for (var factory : ServiceConfig.getServices()) {
+        registerAll(ServiceConfig.getServices());
+    }
+
+    void registerAll(List<Function<ServiceRegistry, IService>> factories) {
+        for (var factory : factories) {
             services.add(factory.apply(this));
         }
     }
